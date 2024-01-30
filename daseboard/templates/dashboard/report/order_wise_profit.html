@@ -1,0 +1,59 @@
+{% extends 'dashboard/base.html' %}
+
+{% block dashboard %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <div class="container-full">
+        <!-- Content Header (Page header) -->
+        <div class="content-header d-flex">
+            <div class="me-auto mt-2">
+                <h4 class="page-title">Order Wise Profit</h4>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="box">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="productorder" class="table table-hover no-wrap product-order" data-page-size="10">
+                                    <thead>
+                                        <tr>
+                                            <th>Order Id</th>
+                                            <th>Product Name</th>
+                                            <th>Purchase Price</th>
+                                            <th>Selling Price</th>
+                                            <th>Total Profit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in orders %}
+                                            {% for order_item in order.items.all %}
+                                                <tr>
+                                                    <td>{{ order.id }}</td>
+                                                    <td>{{ order_item.item }}</td>
+                                                    <td>{{ order_item.item.product_purchase_price }}</td>
+                                                    <td>{{ order_item.item.price }}</td>
+                                                    <!-- Display the total profit for the order -->
+<td>{{ order_profits|default:""|safe }} ({{ order_profits|length }})</td>
+
+                                                </tr>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock dashboard %}
